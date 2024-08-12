@@ -1,30 +1,28 @@
 const express = require('express');
-const path = require('path'); // Importar o módulo path
+const path = require('path');
 const app = express();
 
-app.use(express.json()); // Para entender o corpo das requisições JSON
-
-// Definindo o array de tarefas
+app.use(express.json()); 
 let tarefas = [
     { id: 1, descrição: 'Estudar Node.js' },
     { id: 2, descrição: 'Praticar Express' },
     { id: 3, descrição: 'Revisar JavaScript' }
 ];
 
-// Serve arquivos estáticos da pasta 'public'
+
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Rota inicial
+
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Rota para obter todas as tarefas
+
 app.get('/tarefas', (req, res) => {
     res.json(tarefas);
 });
 
-// Rota para criar uma nova tarefa
+
 app.post('/tarefas', (req, res) => {
     const { descrição } = req.body;
     if (!descrição) {
@@ -38,7 +36,7 @@ app.post('/tarefas', (req, res) => {
     res.status(201).json(novaTarefa);
 });
 
-// Rota para atualizar uma tarefa existente
+
 app.put('/tarefas/:id', (req, res) => {
     const { id } = req.params;
     const { descrição } = req.body;
